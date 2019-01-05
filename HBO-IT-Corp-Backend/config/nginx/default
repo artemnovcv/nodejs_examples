@@ -1,0 +1,26 @@
+
+server {                                                                               
+                                                                                       
+    listen         80;                                                                 
+    listen         [::]:80;                                                            
+    listen         5000;                                                               
+    listen         [::]:5000;                                                          
+    root           /home/admin/2017-2018-Project-HBO-IT-Corp-6-Frontend/dashboard/dist;
+    index          index.html;                                                         
+    try_files $uri /index.html;                                                        
+                                                                                       
+                                                                                       
+location /api {                                                                        
+alias /home/admin/2017-2018-Project-HBO-IT-Corp-6-Backend/bin/www;                     
+#add_header 'Access-Control-Allow-Origin' '*';                                         
+add_header 'Access-Control-Allow-Headers' '*';                                         
+add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';                        
+                                                                                       
+        proxy_set_header X-Forwarder-For $proxy_add_x_forwarded_for;                   
+        proxy_set_header Host $http_host;                                              
+        proxy_set_header X-NginX-Proxy true;                                           
+        proxy_pass http://localhost:3000;                                              
+        proxy_redirect off;                                                            
+}                                                                                      
+                                                                                       
+}                                                                                      
